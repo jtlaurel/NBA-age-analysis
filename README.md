@@ -44,8 +44,8 @@ def plot_distribution(data,stat,ax):
 For this experiment, we will attempt to see if there is a significant difference in the average performance level of a player between certain age groups.
 We can state the following:
 
-Null Hypothesis: There is NO difference in performance level for the relevant metrics between ages and age groups.
-Alternative Hypothesis: There IS a difference in performance level for the relevant metrics between ages and age groups.
+Null Hypothesis: There is NO difference in the mean performance level for the relevant metrics between ages and age groups.
+Alternative Hypothesis: There IS a difference in in the mean performance level for the relevant metrics between ages and age groups.
 
 ### Relevant Functions
 The following function slices data by age range and the desired statistic:
