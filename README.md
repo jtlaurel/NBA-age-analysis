@@ -9,19 +9,27 @@ This is a public data set published at https://data.world/jgrosz99/nba-player-da
 
 ## Exploratory Data Analysis
 ### Initial Findings
-Upon examining the data after loading it into a pandas dataframe, we can see that there are a number of missing values(Picture?). Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics using the groupby method(picture.)
+Upon examining the data after loading it into a pandas data frame, we can see that there are a number of missing values in certain columns. ![](images/data_snippet.png)
 
-As we can see, age seems to possess some type of effect on these metrics. Another thing to consider is if these metrics are affected by time (picture). We can see that while some statistics such as 3PAr and BLK% have a visible trend as the years pass, the rest of the metrics we are looking at have no visible trend. Lastly, most of these metrics, like PER and TS%, take into account various others metrics when being calculated. 
+Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics popular metrics located in the beginning of the data frame. The metrics in question are PER, TS%, 3PAr, FTr, TRB%, AST%, STL%, BLK%, WS/48. Since most other metrics located in the rest of the data frame are either combinations or variations of other metrics, we can choose to exclude them.
+
 
 ### Cleaning the Data
-When exploring the data, entries within 2016 were notable in that they had incomplete game data for that season. We decided to remove this data as the nature of advanced stats tend to be more variant with small game sample sizes, this can lead to abursdly high and low numbers that aren't representative of a player's season-long performance.  We also narrowed down our columns to the features we plotted above and removed entires with missing values in this columns. This left us with 11,539 rows from the original data set. In addition, when grouping by age, the ages of 18 and 39+ had to few entries too show a meaningful distribution, so we narrowed our scope to ages with a sample size of 50 or greater.
+When exploring the data, entries within 2016 were notable in that they had incomplete game data for that season. We decided to remove this data as the nature of advanced stats tend to be more variant with small game sample sizes, this can lead to abursdly high and low numbers that aren't representative of a player's season-long performance.  We also narrowed down our columns to the features we mentioned above and removed entries with missing values in these columns. This can be done with the iloc method to slice relevant features:
+``` .iloc([:,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,21,22]])```
+
+This left us with 11,539 rows from the original data set. In addition, when grouping by age, the ages of 18 and 39+ had to few entries too show a meaningful distribution, so we narrowed our scope to ages with a sample size of 50 or greater. We then showed how age varies over these relevant metrics using the groupby method ![](images/AgevsMetrics.png)
+
+As we can see, age seems to possess some type of effect on these metrics. Another thing to consider is if these metrics change as the game evolves year by year. ![](images/YearvsMetrics.png)
+
+The plots above demonstrate that certain metrics such as 3PAr and BLK% trend upwards as the years pass, suggesting that these may not be reliable metrics to consider.
 
 ### Relevant Metrics
-After cleaning the data we can narrow down our relevant features to three metrics to measure player performance, Player Efficiency Rating (PER), True Shooting Percentage (TS%), and Win Share per 48 Minutes (WS/48). These will measure overall player production, shooting ability, and win contributions respectively in an attempt to find a commonality on how age affects these various metrics. 
+After cleaning the data we can narrow down our relevant features to three metrics to measure player performance, Player Efficiency Rating (PER), True Shooting Percentage (TS%), and Win Share per 48 Minutes (WS/48). These metrics measure overall player production, shooting ability, and win contributions respectively, three different ways to measure 'player performance'. We will attempt to find a commonality on how age affects these various metrics. ![](images/AgevsRelevant_Metrics.png)
 
 ## Analysis
 ### Distributions
-We begin by taking a look at the distribution of these metrics(picture). We can clearly see that the distribution for our population is approximately normal for all three of these metrics. Since normal distributions are pretty typical for sums and averages, it is imporant to note that these metrics are in fact weighted sums of other metrics. (picture)
+We begin by taking a look at the distribution of these metrics(picture). We can clearly see that the distribution for our population is approximately normal for all three of these metrics. Since normal distributions are pretty typical for sums and averages, it is imporant to note that these metrics are in fact weighted sums of other metrics. ![](images/Distribution_of_Metrics.png)
 
 The following function was utilized during this process to make histograms in a timely fashion:
 ```
@@ -90,16 +98,18 @@ def p_value_matrix(data, stat, start, end, step = 1):
  
 
 ### Process
-Since the population is approximately normal and we are testing if there is a significant difference in the means of these statistics, we will utilize the T-test to determine if our null hypothesis can be rejected. However, since we are testing how an age or age group's mean performance is significantly different from a large number of other ages/age groups, it would be more appropriate to plot a p-value matrix. Utilizing a function for creating heatmaps, we produced three p-value 'heatmaps' for our relevant statistics. 
+Since the population is approximately normal and we are testing if there is a significant difference in the means of these statistics, we will utilize a T-test to determine if our null hypothesis can be rejected. However, since we are testing how an age or age group's mean performance is significantly different from a large number of other ages/age groups, it would be more appropriate to plot a p-value matrix. Utilizing a function for creating heatmaps, we produced three p-value 'heatmaps' for our relevant statistics. 
+
+Here, we would like to use an alpha level of 0.05. Conducting a power test on instances in which we reject the null hypothesis, the statistical power is generally above 99%. We can interpret our p-values as the probability of observing results as or more extreme than our hypothesis test conclusion. Upon looking at the standard deviations of the data, we cannot assume equal variance, so we will be utilizing the Welch's T-test.
 
 ### Findings
 
-Our heatmap for PER demonstrates that there is a large difference in player productivity at age 30. Looking on our earlier Age vs. PER plot verifies that this is associated with a decline in performance. In addition, younger players seem to perform closer to the median age of 26. (picture)
+Our heatmap for PER demonstrates that there is a large difference in player productivity at age 30. Looking on our earlier Age vs. PER plot verifies that this is associated with a decline in performance. In addition, younger players seem to perform closer to the median age of 26. ![](images/PER_heatmap.png)
 
-Our heatmap for TS% look much different. There are clearly defined age groups (represented by the light squares) in which the p-value is not rejected. This suggests some commonality in shooting performance within these clusters of ages. Similary to PER, however, we can note that there is a steep decline at around age 30.(picture)
+Our heatmap for TS% looks much different. There are clearly defined age groups (represented by the light squares) in which the p-value is not rejected. This suggests some commonality in shooting performance within these clusters of ages. Similary to PER, however, we can note that there is a steep decline at around age 30. ![](images/TS_heatmap.png)
 
-Our heatmap for WS/48 demonstrates a different trend from the previous metrics. There is a large change in performance at age 23, but this instead is associated with an increase in performance. In addition, we can see that there that older players tend to perform more similarly to the median age.(picture)
+Our heatmap for WS/48 demonstrates a different trend from the previous metrics. There is a large change in performance at age 23, but this instead is associated with an increase in performance. In addition, we can see that there that older players tend to perform more similarly to the median age. ![](images/WS_heatmap.png)
 
 ### Conclusions
 
-We can conclude that while there is not significant difference in player performance across every age specified in our range, there are distinct age groups that differ in overall performance to others. 
+We can conclude that while there is not significant difference in player performance across every age specified in our range, we can visualize that there are distinct ages/age groups that can reject the null hypothesis when compared to others. This suggests that there is in fact a significant difference in player performance across different age groups, and our peak age can be pinned down to 24 to 30 (the cluster that fails to reject the null hypothesis but has the highest average amongst each other).
