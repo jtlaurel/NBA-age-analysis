@@ -24,11 +24,13 @@ After cleaning the data we can narrow down our relevant features to three metric
 We begin by taking a look at the distribution of these metrics(picture). We can clearly see that the distribution for our population is approximately normal for all three of these metrics. Since normal distributions are pretty typical for sums and averages, it is imporant to note that these metrics are in fact weighted sums of other metrics. (picture)
 
 The following function was utilized during this process to make histograms in a timely fashion:
->def plot_distribution(data,stat,ax):
->    if len(data) > 2500:
->        ax.hist(data[stat],bins = 50)
->    else:
->        ax.hist(data[stat],bins = int(len(data)**0.5))
+```
+def plot_distribution(data,stat,ax):
+    if len(data) > 2500:
+        ax.hist(data[stat],bins = 50)
+    else:
+        ax.hist(data[stat],bins = int(len(data)**0.5))
+ ```       
 
 ### Hypothesis Tests
 For this experiment, we will attempt to see if there is a significant difference in the average performance level of a player between certain age groups.
@@ -38,7 +40,54 @@ Null Hypothesis: There is NO difference in performance level for the relevant me
 Alternative Hypothesis: There IS a difference in performance level for the relevant metrics between ages and age groups.
 
 ### Relevant Functions
+The following function slices data by age range and the desired statistic:
+```
+def age_slice(data,age,stat,end = 0):
+    if end != 0:
+        data_out = data[(data['Age'] == age)] 
+        for num in range(age + 1,end + 1):
+            data_add = data[(data['Age'] == num)]
+            data_out = pd.concat([data_out,data_add])
+        return data_out[stat]
+    data_out = data[(data['Age'] == age)] 
+    return data_out[stat]
+```
 
+The following function generates t-test p-values across a range of values (in this case age) and saves them into a matrix:
+```
+def p_value_matrix(data, stat, start, end, step = 1):
+    p_values = []
+    for num1 in range(start,end+1,step):
+        for num2 in range(start,end+1,step):
+            _,p = stats.ttest_ind(age_slice(data,num1,stat,num1+(step-1)), age_slice(data,num2,stat,num2+(step-1)))
+            p_values.append(p)
+    np.array(p_values).reshape(int((end-start+1)/step),-1)
+    return np.array(p_values).reshape(int((end-start+1)/step),-1)
+ ```
+ 
+ The following function creates heatmaps from the provided p-value matrix:
+ ```
+ def make_heatmap(matrix, stat, start, end, labels = 0):
+    fig, ax = plt.subplots(figsize = (15,15))
+    im = ax.imshow(matrix, cmap = 'copper')
+
+    ax.set_xticks(range(len(matrix)))
+    ax.set_yticks(range(len(matrix)))
+    if labels == 0:
+        ax.set_xticklabels(np.arange(start,end+1), size = 14)
+        ax.set_yticklabels(np.arange(start,end+1), size = 14)
+    else:
+        ax.set_xticklabels(labels, size = 14)
+        ax.set_yticklabels(labels, size = 14)
+    ax.xaxis.tick_top()
+    ax.set_title('P-Value Matrix for {stat_title}'.format(stat_title = stat),size = 16)
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            text = ax.text(j, i, round_down(matrix[i, j],2),
+                       ha="center", va="center", color="w", size = 14)
+```
+ 
 
 ### Process
 Since the population is approximately normal and we are testing if there is a significant difference in the means of these statistics, we will utilize the T-test to determine if our null hypothesis can be rejected. However, since we are testing how an age or age group's mean performance is significantly different from a large number of other ages/age groups, it would be more appropriate to plot a p-value matrix. Utilizing a function for creating heatmaps, we produced three p-value 'heatmaps' for our relevant statistics. 
