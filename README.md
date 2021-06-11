@@ -9,7 +9,7 @@ This is a public data set published at https://data.world/jgrosz99/nba-player-da
 
 ## Exploratory Data Analysis
 ### Initial Findings
-Upon examining the data after loading it into a pandas dataframe, we can see that there are a number of missing values(Picture?). Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics using the groupby method(picture.)
+Upon examining the data after loading it into a pandas dataframe, we can see that there are a number of missing values(Picture?). Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics using the groupby method ![](https://github.com/jtlaurel/NBA-age-analysis/blob/main/images/AgevsMetrics.png)
 
 As we can see, age seems to possess some type of effect on these metrics. Another thing to consider is if these metrics are affected by time (picture). We can see that while some statistics such as 3PAr and BLK% have a visible trend as the years pass, the rest of the metrics we are looking at have no visible trend. Lastly, most of these metrics, like PER and TS%, take into account various others metrics when being calculated. 
 
@@ -96,7 +96,7 @@ Since the population is approximately normal and we are testing if there is a si
 
 Our heatmap for PER demonstrates that there is a large difference in player productivity at age 30. Looking on our earlier Age vs. PER plot verifies that this is associated with a decline in performance. In addition, younger players seem to perform closer to the median age of 26. (picture)
 
-Our heatmap for TS% look much different. There are clearly defined age groups (represented by the light squares) in which the p-value is not rejected. This suggests some commonality in shooting performance within these clusters of ages. Similary to PER, however, we can note that there is a steep decline at around age 30.(picture)
+Our heatmap for TS% looks much different. There are clearly defined age groups (represented by the light squares) in which the p-value is not rejected. This suggests some commonality in shooting performance within these clusters of ages. Similary to PER, however, we can note that there is a steep decline at around age 30.(picture)
 
 Our heatmap for WS/48 demonstrates a different trend from the previous metrics. There is a large change in performance at age 23, but this instead is associated with an increase in performance. In addition, we can see that there that older players tend to perform more similarly to the median age.(picture)
 
