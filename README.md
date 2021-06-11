@@ -24,13 +24,13 @@ After cleaning the data we can narrow down our relevant features to three metric
 We begin by taking a look at the distribution of these metrics(picture). We can clearly see that the distribution for our population is approximately normal for all three of these metrics. Since normal distributions are pretty typical for sums and averages, it is imporant to note that these metrics are in fact weighted sums of other metrics. (picture)
 
 The following function was utilized during this process to make histograms in a timely fashion:
-```
-def plot_distribution(data,stat,ax):
-    if len(data) > 2500:
-        ax.hist(data[stat],bins = 50)
-    else:
-        ax.hist(data[stat],bins = int(len(data)**0.5))
-```
+>```
+>def plot_distribution(data,stat,ax):
+>    if len(data) > 2500:
+>        ax.hist(data[stat],bins = 50)
+>    else:
+>        ax.hist(data[stat],bins = int(len(data)**0.5))
+>```
 
 ### Hypothesis Tests
 For this experiment, we will attempt to see if there is a significant difference in the average performance level of a player between certain age groups.
