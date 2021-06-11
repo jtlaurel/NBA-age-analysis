@@ -98,7 +98,9 @@ def p_value_matrix(data, stat, start, end, step = 1):
  
 
 ### Process
-Since the population is approximately normal and we are testing if there is a significant difference in the means of these statistics, we will utilize the T-test to determine if our null hypothesis can be rejected. However, since we are testing how an age or age group's mean performance is significantly different from a large number of other ages/age groups, it would be more appropriate to plot a p-value matrix. Utilizing a function for creating heatmaps, we produced three p-value 'heatmaps' for our relevant statistics. 
+Since the population is approximately normal and we are testing if there is a significant difference in the means of these statistics, we will utilize a T-test to determine if our null hypothesis can be rejected. However, since we are testing how an age or age group's mean performance is significantly different from a large number of other ages/age groups, it would be more appropriate to plot a p-value matrix. Utilizing a function for creating heatmaps, we produced three p-value 'heatmaps' for our relevant statistics. 
+
+Here, we would like to use an alpha level of 0.05. Conducting a power test on instances in which we reject the null hypothesis, the statistical power is generally above 99%. We can interpret our p-values as the probability of observing results as or more extreme than our hypothesis test conclusion. Upon looking at the standard deviations of the data, we cannot assume equal variance, so we will be utilizing the Welch's T-test.
 
 ### Findings
 
@@ -110,4 +112,4 @@ Our heatmap for WS/48 demonstrates a different trend from the previous metrics. 
 
 ### Conclusions
 
-We can conclude that while there is not significant difference in player performance across every age specified in our range, there are distinct age groups that differ in overall performance to others. 
+We can conclude that while there is not significant difference in player performance across every age specified in our range, we can visualize that there are distinct ages/age groups that can reject the null hypothesis when compared to others. This suggests that there is in fact a significant difference in player performance across different age groups, and our peak age can be pinned down to 24 to 30 (the cluster that fails to reject the null hypothesis but has the highest average amongst each other).
