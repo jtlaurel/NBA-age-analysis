@@ -110,19 +110,19 @@ Our heatmap for TS% looks much different. There are clearly defined age groups (
 
 Our heatmap for WS/48 demonstrates a different trend from the previous metrics. There is a large change in performance at age 23, but this instead is associated with an increase in performance. In addition, we can see that there that older players tend to perform more similarly to the median age. ![](images/WS_heatmap.png)
 
-What if we repeated this process for high performing players that are more inclined to have more pronounced career paths? We undergo this process by eliminating players that have an average PER below 15 (the intended average of the statistic). This leaves us with around 4,000 of the original entries. We can see when graphed alongside age, the three metrics we are considering have more pronounced peaks. ![](images/AgevsRelevant_Metrics_Good.png). 
+What if we repeated this process for high performing players that are more inclined to have more pronounced career paths? We undergo this process by eliminating players that have an average PER below 15 (the intended average of the statistic). This leaves us with around 4,000 of the original entries. We can see when graphed alongside age, the three metrics we are considering have more pronounced peaks. ![](images/AgevsRelevant_Metrics_Good.png)
 
 Upon examining their distributions, we can also see that these are approximately normally distributed. ![](images/Distribution_of_Metrics_good.png)
 
-Examining the PER heatmap allows us to see that the data favors younger players less than it originally showed ![](images/PER_heatmap_good.png)
+Examining the PER heatmap allows us to see that the data favors younger players less than it originally showed: ![](images/PER_heatmap_good.png)
 
-Examining the TS% heatmap shows a similar trend ![](images/TS_heatmap_good.png)
+Examining the TS% heatmap shows a similar trend: ![](images/TS_heatmap_good.png)
 
-Examining the WS/48 heatmap allows us to that that the data favors older players less than it originally showed ![](images/WS_heatmap_good.png)
+Examining the WS/48 heatmap allows us to see that the data favors older players less than it originally showed, and behaves simiarly to the other two metrics: ![](images/WS_heatmap_good.png)
 
 Looking at these three heatmaps, we can see some commonalities between age groups start show across all three metrics. Their is a defined peak in performance at the age of 24-29, a sharp increase at around the age of 23, and a sharp decrease around the age of 30.
 
 # Conclusions
 
-We can conclude that while there is not significant difference in player performance across every age specified in our range, we can visualize that there are distinct ages/age groups for which we can reject the null hypothesis when compared to others. This suggests that there is in fact a significant difference in player performance across different age groups, and our peak age can be pinned down to 24 to 29 (the cluster that fails to reject the null hypothesis amongst each other but has the highest average).
+We can conclude that while there is not significant difference in mean player performance across every age specified in our range, we can visualize that there are distinct ages/age groups for which we can reject the null hypothesis when compared to others. This suggests that there is in fact a significant difference in player performance across different age groups, and our peak age can be pinned down to 24 to 29 (the cluster that fails to reject the null hypothesis amongst each other but has the highest average).
 
