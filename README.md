@@ -9,19 +9,23 @@ This is a public data set published at https://data.world/jgrosz99/nba-player-da
 
 ## Exploratory Data Analysis
 ### Initial Findings
-Upon examining the data after loading it into a pandas dataframe, we can see that there are a number of missing values in certain columns. ![](images/data_snippet.png)
+Upon examining the data after loading it into a pandas data frame, we can see that there are a number of missing values in certain columns. ![](images/data_snippet.png)
 
-Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics using the groupby method ![](images/AgevsMetrics.png)
+Attempting to remove rows with missing values results in roughly 700 rows remaining, less than 5% of the original number of entries. To account for this, we will look at how age trends with a few metrics popular metrics located in the beginning of the data frame. The metrics in question are PER, TS%, 3PAr, FTr, TRB%, AST%, STL%, BLK%, WS/48. Since most other metrics located in the rest of the data frame are either combinations or variations of other metrics, we can choose to exclude them.
 
-As we can see, age seems to possess some type of effect on these metrics. Another thing to consider is if these metrics are affected by time. ![](images/YearvsMetrics.png)
-
-We can see that while some statistics such as 3PAr and BLK% have a visible trend as the years pass, the rest of the metrics we are looking at have no visible trend. Lastly, most of these metrics, like PER and TS%, take into account various others metrics when being calculated. 
 
 ### Cleaning the Data
-When exploring the data, entries within 2016 were notable in that they had incomplete game data for that season. We decided to remove this data as the nature of advanced stats tend to be more variant with small game sample sizes, this can lead to abursdly high and low numbers that aren't representative of a player's season-long performance.  We also narrowed down our columns to the features we plotted above and removed entires with missing values in this columns. This left us with 11,539 rows from the original data set. In addition, when grouping by age, the ages of 18 and 39+ had to few entries too show a meaningful distribution, so we narrowed our scope to ages with a sample size of 50 or greater.
+When exploring the data, entries within 2016 were notable in that they had incomplete game data for that season. We decided to remove this data as the nature of advanced stats tend to be more variant with small game sample sizes, this can lead to abursdly high and low numbers that aren't representative of a player's season-long performance.  We also narrowed down our columns to the features we mentioned above and removed entries with missing values in these columns. This can be done with the iloc method to slice relevant features:
+``` .iloc([:,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,21,22]])```
+
+This left us with 11,539 rows from the original data set. In addition, when grouping by age, the ages of 18 and 39+ had to few entries too show a meaningful distribution, so we narrowed our scope to ages with a sample size of 50 or greater. We then showed how age varies over these relevant metrics using the groupby method ![](images/AgevsMetrics.png)
+
+As we can see, age seems to possess some type of effect on these metrics. Another thing to consider is if these metrics change as the game evolves year by year. ![](images/YearvsMetrics.png)
+
+The plots above demonstrate that certain metrics such as 3PAr and BLK% trend upwards as the years pass, suggesting that these may not be reliable metrics to consider.
 
 ### Relevant Metrics
-After cleaning the data we can narrow down our relevant features to three metrics to measure player performance, Player Efficiency Rating (PER), True Shooting Percentage (TS%), and Win Share per 48 Minutes (WS/48). These will measure overall player production, shooting ability, and win contributions respectively in an attempt to find a commonality on how age affects these various metrics. ![](images/AgevsRelevant_Metrics.png)
+After cleaning the data we can narrow down our relevant features to three metrics to measure player performance, Player Efficiency Rating (PER), True Shooting Percentage (TS%), and Win Share per 48 Minutes (WS/48). These metrics measure overall player production, shooting ability, and win contributions respectively, three different ways to measure 'player performance'. We will attempt to find a commonality on how age affects these various metrics. ![](images/AgevsRelevant_Metrics.png)
 
 ## Analysis
 ### Distributions
